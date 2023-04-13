@@ -16,23 +16,39 @@
     />
 
     <style>
-      body {margin: 50px; padding: 0;}
-      #map1 {position: relative; height: 300px; width: 50%;}
-      
+      body {
+        margin: 50px;
+        padding: 0;
+      }
+      #map1 {
+        position: relative;
+        height: 300px;
+        width: 50%;
+      }
+
       /* 2.5.2 Insert additional CSS code here between the <style> tags */
     </style>
   </head>
 
   <body>
-    <h1> Map 1: </h1>
-      <div id='map1'></div>
-    <hr>
+    <h1>Map 1:</h1>
+    <div id="map1"></div>
+    <hr />
 
     <script>
       /* Insert the JavaScript within the <script> tags, within the body */
-      // 2.1 Start with the Mapbox access token
+
+      // Start with the Mapbox access token here
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoiZXRoYW5oZWluZSIsImEiOiJjbGc1ZmgzYTMwMzJpM2xtcHpqNzJjZXAyIn0.kEWe2UQXare-dJOjL8fDtg";
 
       // 2.2 Then initialize the first map
+      var map = new mapboxgl.Map({
+        container: "map1", // id of a div on your page, where the map will be inserted
+        style: "mapbox://styles/mapbox/streets-v11", // the style URL 'mapbox://styles/mapbox/streets-v11'
+        center: [-122.6788, 45.5212], // starting position [lng, lat] eg. [-122.6788, 45.5212]
+        zoom: 11, // starting zoom
+      });
 
       // 2.3 Add any other variables (such as popups and markers) to the first map
 
