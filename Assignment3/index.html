@@ -145,9 +145,26 @@
         style: "mapbox://styles/ethanheine/clgmqi2b1001k01rn85ag71eh", // stylesheet location
       });
 
-      // Add zoom and navigation controls to the map.
+      // Zoom and navigation controls
       var nav = new mapboxgl.NavigationControl();
       map.addControl(nav, "top-left");
+
+      // Interactive toggle to close and reopen legend
+      var state = { panelOpen: true };
+
+      function panelSelect(e) {
+        if (state.panelOpen) {
+          document.getElementById("descriptionPanel").style.height = "26px";
+          document.getElementById("glyph").className =
+            "chevron glyphicon glyphicon-chevron-up";
+          state.panelOpen = false;
+        } else {
+          document.getElementById("descriptionPanel").style.height = "250px";
+          document.getElementById("glyph").className =
+            "chevron glyphicon glyphicon-chevron-down";
+          state.panelOpen = true;
+        }
+      }
     </script>
   </body>
 </html>
