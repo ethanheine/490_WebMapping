@@ -51,7 +51,14 @@
     </div>
 
     <script>
-      //add your Mapbox access token and map variable here!
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoiZXRoYW5oZWluZSIsImEiOiJjbGc1ZmgzYTMwMzJpM2xtcHpqNzJjZXAyIn0.kEWe2UQXare-dJOjL8fDtg";
+      var ownerMap = new mapboxgl.Map({
+        container: "owners", // owners map div
+        style: "mapbox://styles/mapbox/dark-v10", // Mapbox dark style
+        center: [-101.80625508681301, 39.654437154030745],
+        zoom: 10,
+      });
     </script>
   </body>
 </html>
