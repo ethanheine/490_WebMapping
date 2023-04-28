@@ -53,12 +53,126 @@
     <script>
       mapboxgl.accessToken =
         "pk.eyJ1IjoiZXRoYW5oZWluZSIsImEiOiJjbGc1ZmgzYTMwMzJpM2xtcHpqNzJjZXAyIn0.kEWe2UQXare-dJOjL8fDtg";
+
       var ownerMap = new mapboxgl.Map({
         container: "owners", // owners map div
         style: "mapbox://styles/mapbox/dark-v10", // Mapbox dark style
-        center: [-101.80625508681301, 39.654437154030745],
+        center: [-122.68187818117102, 45.515657954538476],
         zoom: 10,
       });
+
+      var renterMap = new mapboxgl.Map({
+        container: "renters", // renters map div
+        style: "mapbox://styles/mapbox/dark-v10",
+        center: [-122.68187818117102, 45.515657954538476], // Same center as owner map
+        zoom: 10,
+      });
+
+      var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+      });
+
+      ownerMap.on("load", function () {
+        ownerMap.addLayer({
+          id: "Owner Data",
+          type: "fill",
+          source: {
+            type: "vector",
+            url: "mapbox://ethanheine.6evlzak9", // tileset ID url
+          },
+          "source-layer": "Owner-Renter-Pop-26wkn9",
+          paint: {
+            "fill-color": [
+              "step",
+              ["get", "Own"],
+              "hsl(225, 100%, 97%)",
+              17.0,
+              "hsl(203, 47%, 82%)",
+              22.0,
+              "hsl(202, 57%, 63%)",
+              27.0,
+              "#3182bd",
+              32.0,
+              "hsl(210, 90%, 32%)",
+            ],
+            "fill-opacity": 0.7,
+          },
+        });
+      });
+
+      ownerMap.on("mousemove", "Owner Data", function (e) {
+        // Change the cursor style as a UI indicator.
+        ownerMap.getCanvas().style.cursor = "pointer";
+
+        var coordinates = e.lngLat;
+        var description = e.features[0].properties.Own;
+
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup
+          .setLngLat(coordinates)
+          .setHTML("Owners: " + description + "%")
+          .addTo(ownerMap);
+      });
+
+      ownerMap.on("mouseleave", "Owner Data", function () {
+        ownerMap.getCanvas().style.cursor = "";
+        popup.remove();
+      });
+
+      renterMap.on("load", function () {
+        renterMap.addLayer({
+          id: "Renter Data",
+          type: "fill",
+          source: {
+            type: "vector",
+            url: "mapbox://ethanheine.6evlzak9", // tileset ID URL
+          },
+          "source-layer": "Owner-Renter-Pop-26wkn9",
+          paint: {
+            "fill-color": [
+              "step",
+              ["get", "Rent"],
+              "hsl(225, 100%, 97%)",
+              17.0,
+              "hsl(203, 47%, 82%)",
+              22.0,
+              "hsl(202, 57%, 63%)",
+              27.0,
+              "#3182bd",
+              32.0,
+              "hsl(210, 90%, 32%)",
+            ],
+            "fill-opacity": 0.7,
+          },
+        });
+      });
+
+      renterMap.on("mousemove", "Renter Data", function (e) {
+        // Change the cursor style as a UI indicator.
+        renterMap.getCanvas().style.cursor = "pointer";
+
+        var coordinates = e.lngLat;
+        var description = e.features[0].properties.Rent;
+
+        // Populate the popup and set its coordinates
+        // based on the feature found.
+        popup
+          .setLngLat(coordinates)
+          .setHTML("Renters: " + description + "%")
+          .addTo(renterMap);
+      });
+
+      renterMap.on("mouseleave", "Renter Data", function () {
+        renterMap.getCanvas().style.cursor = "";
+        popup.remove();
+      });
+
+      // A selector or reference to HTML element
+      var container = "#comparison-container";
+
+      var map = new mapboxgl.Compare(ownerMap, renterMap, container, {});
     </script>
   </body>
 </html>
