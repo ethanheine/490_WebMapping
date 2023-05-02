@@ -220,7 +220,20 @@
                 e.target.checked ? "visible" : "none"
               );
             });
-            // Add popup code here (III.2)
+            // When a click event occurs on a feature in the places layer,
+            // open a popup at the location of the feature, with description HTML from its properties.
+            map.on("click", layerID, function (e) {
+              var coordinates = e.features[0].geometry.coordinates.slice();
+              var description =
+                "This is a map point <br> Type: " +
+                e.features[0].properties.icon;
+
+              new mapboxgl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(description) // the string in the description var is added to the popup here
+                .addTo(map);
+            });
+
             // Add mouseover code here (V.1)
           }
         });
