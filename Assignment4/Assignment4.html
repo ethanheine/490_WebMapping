@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Swipe between maps</title>
+    <title>Portland Owners and Renters Comparison</title>
     <meta
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
@@ -53,19 +53,28 @@
     <script>
       mapboxgl.accessToken =
         "pk.eyJ1IjoiZXRoYW5oZWluZSIsImEiOiJjbGc1ZmgzYTMwMzJpM2xtcHpqNzJjZXAyIn0.kEWe2UQXare-dJOjL8fDtg";
+      
+      var bounds = [
+        [-124.02596083486894, 44.74794644547369], // Southwest coordinates
+        [-121.05221477435705, 45.96396396456146] // Northeast coordinates
+      ];
 
       var ownerMap = new mapboxgl.Map({
         container: "owners", // owners map div
-        style: "mapbox://styles/mapbox/dark-v10", // Mapbox dark style
+        style: "mapbox://styles/mapbox/dark-v11", // Mapbox dark style
         center: [-122.68187818117102, 45.515657954538476],
         zoom: 10,
+        minZoom: 8, // Set the minimum zoom level to be 8
+        maxBounds: bounds,
       });
 
       var renterMap = new mapboxgl.Map({
         container: "renters", // renters map div
-        style: "mapbox://styles/mapbox/dark-v10",
+        style: "mapbox://styles/mapbox/dark-v11",
         center: [-122.68187818117102, 45.515657954538476], // Same center as owner map
         zoom: 10,
+        minZoom: 8, // Set the minimum zoom level to be 8
+        maxBounds: bounds,
       });
 
       var popup = new mapboxgl.Popup({
