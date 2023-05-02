@@ -167,15 +167,15 @@
       // Set bounds to Washington, DC
       var bounds = [
         [-77.26383, 38.73854], // Soutwest coordinates
-        [-76.83569, 39.00114] // Northeast coordinates
-      ]
+        [-76.83569, 39.00114], // Northeast coordinates
+      ];
       var map = new mapboxgl.Map({
         container: "map",
         style: "mapbox://styles/mapbox/light-v10",
         center: [-77.04, 38.907],
         zoom: 11.15,
         minZoom: 11.15,
-        maxBounds: bounds // Set bounds from variable above
+        maxBounds: bounds, // Set bounds from variable above
       });
 
       // Map's On 'load' function.
@@ -239,6 +239,15 @@
                 .setLngLat(coordinates)
                 .setHTML(description) // the string in the description var is added to the popup here
                 .addTo(map);
+            });
+            // Change the cursor to a pointer when the mouse is over the places layer
+            map.on('mouseenter', layerID, function() {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves
+            map.on('mouseleave', layerID, function() {
+                map.getCanvas().style.cursor = '';
             });
 
             // Add mouseover code here (V.1)
